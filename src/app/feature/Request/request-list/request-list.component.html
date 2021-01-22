@@ -1,0 +1,42 @@
+<app-menu></app-menu>
+<section class="heading">
+    <span class="page-title font-weight-bold font-italic">[{{title}}]</span>
+</section>
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Description</th>
+            <th>Justification</th>
+            <th>Date Needed</th>
+            <th>Delivery Mode</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Submitted Date</th>
+            <th>Reason for Rejection</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let r of requests">
+            <td>{{r.user.userName}}</td>
+            <td>{{r.description}}</td>
+            <td>{{r.justification}}</td>
+            <td>{{r.dateNeeded}}</td>
+            <td>{{r.deliveryMode}}</td>
+            <td>{{r.status}}</td>
+            <td>{{r.total}}</td>
+            <td>{{r.submittedDate}}</td>
+            <td>{{r.reasonForRejection}}</td>
+            <td><a routerLink='/requests/detail/{{v.id}}'><img src='assets/details.png' width='20' height='20'
+                        title='Request Details'> </a>
+                &nbsp;
+                <a routerLink='/requests/edit/{{r.id}}'><img src='assets/pencil-icon.png' width='20' height='20'
+                        title='Edit' *ngIf="(r.status!=='Approved')&&(isAdmin || loggedInUser.id==r.user.id)"></a>
+                &nbsp;
+                <a routerLink='/requests/lines/{{r.id}}'><img src='assets/lines.png' width='20' height='20'
+                        title='Lines' *ngIf="isAdmin || loggedInUser.id==r.user.id"></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
