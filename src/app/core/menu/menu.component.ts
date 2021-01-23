@@ -7,19 +7,17 @@ import { MenuItem } from 'src/app/model/menu-item.class';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  menuItems: MenuItem[] = [
-    new MenuItem("Login", "/user-login", "User Login"),
-    new MenuItem("User", "/users-list", "Users List"),
-    new MenuItem("Vendor", "/vendors-list", "Vendors List"),
-    new MenuItem("Product", "/products-list", "Products List"),
-    new MenuItem("Request", "/requests-list", "Requests List"),
-    new MenuItem("Line Item", "/line-item-list", "Line Items List"),
+  menuItems : MenuItem[] = [
+    new MenuItem("User", "/user-list", "User List"),
+    new MenuItem("Vendor", "/vendor-list", "Vendor List"),
+    new MenuItem("Product", "/product-list", "Product List"),
+    new MenuItem("Request", "/request-list", "Request List"),
+    new MenuItem("Login", "/user-login", "User Login")
   ];
 
   constructor() { }
 
   ngOnInit(): void {
-
   }
 
 }

@@ -1,5 +1,6 @@
-import { Product } from './product.class';
 import { Request } from './request.class';
+import { Product } from './product.class';
+
 
 export class LineItem {
     id: number;
@@ -7,8 +8,7 @@ export class LineItem {
     product: Product;
     quantity: number;
 
-    constructor(id: number = 0, request: Request = new Request, product: Product = new Product(),
-        quantity: number = 0) {
+    constructor(id: number = 0, request: Request = null, product: Product = null, quantity:number = 0) {
         this.id = id;
         this.request = request;
         this.product = product;

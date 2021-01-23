@@ -1,18 +1,11 @@
 <app-menu></app-menu>
-<div class='component-content'>
-    <div class='lefthalf'>
-        <span class='component-title'>{{titleOne}} </span>
-        <span> | <a routerLink="/requests/list">Return to list...</a></span>
-    </div>
-</div>
-<p *ngIf='!request'>Loading...</p>
-<table *ngIf='request' class="table table-striped">
+<section class="heading">
+    <span class="page-title font-weight-bold font-italic">[{{requestTitle}}]</span>
+</section>
+<table *ngIf='request' class="table table-sm table-striped">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Total</th>
+            <th>ID</th><th>Description</th><th>Status</th><th>Total</th>
         </tr>
     </thead>
     <tbody>
@@ -20,45 +13,31 @@
             <td>{{request.id}}</td>
             <td>{{request.description}}</td>
             <td>{{request.status}}</td>
-            <td>{{request.total | currency}}</td>
+            <td>${{request.total}}</td>
         </tr>
     </tbody>
 </table>
-<div class='component-content'>
-    <div class='lefthalf'>
-        <span class='component-title'>{{titleTwo}} </span>
-        <span><a routerLink='/line-items/create/{{request.id}}' *ngIf="request.status!='Approved'">
-                <img id='createnew' width='20' height='20' src='assets/add-icon.png' title='Add New'></a>
-        </span>
-    </div>
-</div>
-<table *ngIf='lineItems' class="table table-striped">
+
+<section class="heading">
+    <span class="page-title font-weight-bold font-italic">[{{linesTitle}}]</span>
+    <a routerLink='/product-create'>
+        <img width='20' height='20' src='assets/add-icon.png' title='Add New'>
+    </a>
+</section>
+<table class="table table-sm table-striped">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Line Total</th>
-            <th *ngIf="request.status!='Approved'">Action</th>
+            <th>ID</th><th>Product</th><th>Quantity</th><th>Price</th><th>Line Total</th><th>Action</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngIf="lineItems==''" style="background: #ff8080;">
-            <td colspan="6">No line items yet. Please create a new one!</td>
-        </tr>
-        <tr *ngFor="let l of lineItems | sort:sortCriteria:sortOrder">
-            <td>{{l.id}}</td>
-            <td>{{l.product.name}}</td>
-            <td>{{l.quantity}}</td>
-            <td>{{l.product.price | currency}}</td>
-            <td>{{l.quantity * l.product.price | currency}}</td>
-            <td *ngIf="request.status!='Approved'">
-                <a routerLink='/line-items/edit/{{l.id}}'><img src='assets/pencil-icon.png' width='20' height='20'
-                        title='Edit'></a>
-                | <a (click)="delete(l.id)"><img src='assets/delete.jpg' width='20' height='20' title='delete'></a>
-            </td>
+        <tr *ngFor='let lineItem of lineItems'>
+            <td>{{lineItem.id}}</td>
+            <td>{{lineItem.product.name}}</td>
+            <td>{{lineItem.quantity}}</td>
+            <td>${{lineItem.product.price}}</td>
+            <td>${{lineItem.quantity * lineItem.product.price}}</td>
+            <td>Action</td>
         </tr>
     </tbody>
-    <span><button (click)="submitForReview()" class="btn btn-sm btn-primary" *ngIf="request.status!='Approved' && lineItems!=''">Submit for Review</button></span>
-</table> 
+</table>

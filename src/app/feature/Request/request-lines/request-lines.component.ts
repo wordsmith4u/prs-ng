@@ -1,57 +1,53 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LineItem } from 'src/app/model/line-item.class';
-import { LineItemService } from 'src/app/service/line-item.service';
-import { SystemService } from 'src/app/service/system.service';
-import { BaseComponent } from '../../base/base.component';
-import { RequestService } from 'src/app/service/request.service';
-import { JsonResponse } from 'src/app/model/json-response.class';
-import { ActivatedRoute, Router } from '@angular/router';
+import { LineItemService } from '../../../service/line-item.service';
 import { Request } from 'src/app/model/request.class';
+import { RequestService } from 'src/app/service/request.service';
 
 @Component({
   selector: 'app-request-lines',
   templateUrl: './request-lines.component.html',
   styleUrls: ['./request-lines.component.css']
 })
-export class RequestLinesComponent extends BaseComponent implements OnInit {
-  titleOne: string = "Request Line-Items";
-  titleTwo: string = "Line-Items";
-  request: Request = new Request;
+export class RequestLinesComponent implements OnInit {
+  requestTitle = "Purchase Request Line Items";
+  linesTitle = "Lines";
+  request: Request = null;
   lineItems: LineItem[] = [];
-  id: number = 0;
-  jr: JsonResponse;
+  requestId = 0;
 
   constructor(private lineItemSvc: LineItemService,
-    protected sysSvc: SystemService,
-    private requestSvc: RequestService,
-    private route: ActivatedRoute,
-    private router: Router) {
-    super(sysSvc);
+              private requestSvc: RequestService,
+              private router: Router,
+              private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    // get the id from the url
+    this.route.params.subscribe(
+      parms => {
+        this.requestId = parms['id'];
+      });
+
+    // get the request by the request id
+    this.requestSvc.getById(this.requestId).subscribe(
+      resp => {
+        this.request = resp as Request;
+      },
+      err => {
+        console.log(err);
+      }
+    )
+
+    // get the line items by request id
+    this.lineItemSvc.getLineItemsByRequestId(this.requestId).subscribe(
+      resp => {
+        this.lineItems = resp as LineItem[];
+      },
+      err => {
+        console.log(err);
+      }
+    )
   }
 
-  ngOnInit() {
-    super.ngOnInit();
-    this.sysSvc.checkLogin();
-    this.route.params.subscribe(parms => this.id = parms['id']);
-    this.getLineItem();
-  }
-  getLineItem() {
-    this.requestSvc.get(this.id).subscribe(jr => {
-      this.request = jr.data as Request;
-    });
-    this.route.params.subscribe(parms => this.id = parms['id']);
-    this.lineItemSvc.listLineItemById(this.id).subscribe(jr => {
-      this.lineItems = jr.data as LineItem[];
-    });
-  }
-  delete(lineId: number) {
-    this.lineItemSvc.delete(lineId).subscribe(jr => {
-      this.getLineItem();
-    });
-  }
-  submitForReview() {
-    this.requestSvc.submitForReview(this.request).subscribe(jr => {
-      this.router.navigateByUrl("/requests/list")
-    });
-  }
 }

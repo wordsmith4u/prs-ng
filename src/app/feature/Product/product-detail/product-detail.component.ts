@@ -12,42 +12,40 @@ export class ProductDetailComponent implements OnInit {
   title = "Product Detail";
   product: Product = null;
   productId: number = 0;
-
-  constructor(private productSvc: ProductService,
-    private router: Router,
-    private route: ActivatedRoute) {}
-     
-    ngOnInit(): void {
-      //get the product from the url
-      this.route.params.subscribe(
-        parms => {this.productId = parms['id'];
-        console.log("ProductID = "+this.productId);
-      }
-      );
-      //get product by id
-      this.productSvc.getById(this.productId).subscribe(
-        resp => {
-          this.product = resp as Product;
-          console.log('Product',this.product);
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    }
-    delete() {
-      // save the product to the DB
-      this.productSvc.delete(this.product.id).subscribe(
-        resp => {
-          this.product = resp as Product;
-          console.log('Product deleted',this.product);
-          // forward to the product list component
-          this.router.navigateByUrl("/product-list");
-        },
-        err => {
-          console.log(err);
-        }
   
-      );
-    }
+  constructor(private productSvc: ProductService,
+              private router: Router,
+              private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    // get the id from the url
+    this.route.params.subscribe(
+      parms => {
+        this.productId = parms['id'];
+      });
+    // get product by id
+    this.productSvc.getById(this.productId).subscribe(
+      resp => {
+        this.product = resp as Product;
+      },
+      err => {
+        console.log(err);
+      }
+    )
   }
+
+  delete() {
+    // delete the product from the DB
+    this.productSvc.delete(this.product.id).subscribe(
+      resp => {
+        this.product = resp as Product;
+        // forward to the product list component
+        this.router.navigateByUrl("/product-list");
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+}

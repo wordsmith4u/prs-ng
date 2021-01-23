@@ -5,10 +5,10 @@
     <img width='20' height='20' src='assets/add-icon.png' title='Add New'>
   </a>
 </section>
-<table *ngIf='users' class="table table-striped">
-    <thead>
+<table class="table table-sm table-striped">
+  <thead>
         <tr>
-            <th><a (click)="sortBy('id')">Id</a></th>
+            <th>Id</th>
             <th>User Name</th>
             <th>Name</th>
             <th>Phone Number</th>
@@ -34,4 +34,3 @@
           </td>
         </tr>
       </tbody>
-    </table>
