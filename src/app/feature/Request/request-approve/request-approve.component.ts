@@ -4,23 +4,25 @@ import { LineItem } from 'src/app/model/line-item.class';
 import { LineItemService } from '../../../service/line-item.service';
 import { Request } from 'src/app/model/request.class';
 import { RequestService } from 'src/app/service/request.service';
+import { SystemService } from 'src/app/service/system.service';
 
 @Component({
-  selector: 'app-request-lines',
-  templateUrl: './request-lines.component.html',
-  styleUrls: ['./request-lines.component.css']
+  selector: 'app-request-approve',
+  templateUrl: './request-approve.component.html',
+  styleUrls: ['./request-approve.component.css']
 })
-export class RequestLinesComponent implements OnInit {
-  requestTitle = "Purchase Request Line Items";
+export class RequestApproveComponent implements OnInit {
+  requestTitle = "PurchaseRequest Approve/Reject";
   linesTitle = "Lines";
   request: Request = null;
   lineItems: LineItem[] = [];
   lineItem: LineItem = new LineItem();
-  isHidden = false;
+  isHidden = true;
   requestId = 0;
 
   constructor(private lineItemSvc: LineItemService,
               private requestSvc: RequestService,
+              private sysSvc: SystemService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -45,9 +47,6 @@ export class RequestLinesComponent implements OnInit {
     this.lineItemSvc.getLineItemsByRequestId(this.requestId).subscribe(
       resp => {
         this.lineItems = resp as LineItem[];
-        if(this.lineItems.length === 0) {
-          this.isHidden = true;
-        }
       },
       err => {
         console.log(err);
@@ -55,31 +54,24 @@ export class RequestLinesComponent implements OnInit {
     )
   }
 
-  delete(lineItemId: number) {
-    // delete the product from the DB
-    this.lineItemSvc.delete(lineItemId).subscribe(
-      resp => {
-        this.lineItem = resp as LineItem;
-        // reload to the product list component
-        this.ngOnInit();
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
-  submit() {
-    this.requestSvc.submit(this.request).subscribe(
+  approve() {
+    this.requestSvc.approve(this.request).subscribe(
       resp => {
         this.request = resp as Request;
-        // forward to the request list component
-        this.router.navigateByUrl("/request-list");
-      },
-      err => {
-        console.log(err);
+        // forward to request review
+        this.router.navigateByUrl("/request-review/"+this.sysSvc.loggedInUser.id)
       }
-    );
+    )
+  }
+
+  reject() {
+    this.requestSvc.reject(this.request).subscribe(
+      resp => {
+        this.request = resp as Request;
+        // forward to request review
+        this.router.navigateByUrl("/request-review/"+this.sysSvc.loggedInUser.id)
+      }
+    )
   }
 
 }

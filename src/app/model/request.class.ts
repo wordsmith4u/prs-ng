@@ -1,4 +1,4 @@
-import { User } from './user.class';
+import { User } from "../model/user.class";
 
 export class Request {
     id: number;
@@ -12,18 +12,18 @@ export class Request {
     submittedDate: Date;
     reasonForRejection: string;
 
-    constructor(id: number = 0, user: User = new User(), description: string = "", justification: string = "",
-        dateNeeded: Date = new Date(), deliveryMode: string = "", status: string = "", total: number = 0,
-        submittedDate: Date = new Date(), reasonForRejection: string = "") {
-            this.id = id;
-            this.user = new User();
-            this.description = description;
-            this.justification = justification;
-            this.dateNeeded = dateNeeded;
-            this.deliveryMode = deliveryMode;
-            this.status = status;
-            this.total = total;
-            this.submittedDate = submittedDate;
-            this.reasonForRejection = reasonForRejection;
+    constructor(id:number = 0, user:User = new User(), description:string = "", justification:string = "", dateNeeded:Date = new Date(),
+    deliveryMode:string = "", status:string = "", total:number = 0, submittedDate:Date = new Date(), reasonForRejection:string = "") {
+        this.id = id;
+        this.user = new User();
+        this.description = description;
+        this.justification = justification;
+        this.dateNeeded = dateNeeded;
+        this.deliveryMode = deliveryMode;
+        this.status = status;
+        this.total = total;
+        this.submittedDate = submittedDate;
+        this.reasonForRejection = reasonForRejection;
     }
+
 }

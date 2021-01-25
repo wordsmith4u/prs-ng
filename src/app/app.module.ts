@@ -24,6 +24,10 @@ import { RequestCreateComponent } from './feature/request/request-create/request
 import { RequestEditComponent } from './feature/request/request-edit/request-edit.component';
 import { NoComponentDefinedComponent } from './core/no-component-defined/no-component-defined.component';
 import { RequestLinesComponent } from './feature/request/request-lines/request-lines.component';
+import { LineItemCreateComponent } from './feature/line-item/line-item-create/line-item-create.component';
+import { LineItemEditComponent } from './feature/line-item/line-item-edit/line-item-edit.component';
+import { RequestReviewComponent } from './feature/request/request-review/request-review.component';
+import { RequestApproveComponent } from './feature/request/request-approve/request-approve.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,11 @@ import { RequestLinesComponent } from './feature/request/request-lines/request-l
     RequestCreateComponent,
     RequestEditComponent,
     NoComponentDefinedComponent,
-    RequestLinesComponent
+    RequestLinesComponent,
+    LineItemCreateComponent,
+    LineItemEditComponent,
+    RequestReviewComponent,
+    RequestApproveComponent
   ],
   imports: [
     BrowserModule,

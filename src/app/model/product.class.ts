@@ -1,4 +1,4 @@
-import { Vendor } from './vendor.class';
+import { Vendor } from "../model/vendor.class";
 
 export class Product {
     id: number;
@@ -9,8 +9,7 @@ export class Product {
     unit: string;
     photoPath: string;
 
-    constructor(id: number = 0, vendor: Vendor = null, partNumber: string = "", name: string = "",
-        price: number = 0, unit: string = "", photoPath: string = "") {
+    constructor(id:number = 0, vendor:Vendor = null, partNumber:string ="", name:string = "", price:number = 0, unit:string = "", photoPath:string = "") {
         this.id = id;
         this.vendor = vendor;
         this.partNumber = partNumber;
@@ -19,4 +18,5 @@ export class Product {
         this.unit = unit;
         this.photoPath = photoPath;
     }
+
 }

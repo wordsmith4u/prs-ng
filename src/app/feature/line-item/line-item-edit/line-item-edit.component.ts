@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LineItem } from 'src/app/model/line-item.class';
+import { Product } from 'src/app/model/product.class';
 import { LineItemService } from 'src/app/service/line-item.service';
+import { ProductService } from 'src/app/service/product.service';
 
 @Component({
   selector: 'app-line-item-edit',
@@ -9,48 +11,60 @@ import { LineItemService } from 'src/app/service/line-item.service';
   styleUrls: ['./line-item-edit.component.css']
 })
 export class LineItemEditComponent implements OnInit {
-  title = "Line Item Edit";
-  lineItem: LineItem = null;
-  lineItemId: number = 0;
+  title = "PurchaseRequest Line Item Edit";
   submitBtnTitle = "Save";
+  lineItemId = 0;
+  lineItem: LineItem = null;
+  products: Product[] = [];
 
   constructor(private lineItemSvc: LineItemService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+            private productSvc: ProductService,
+            private route: ActivatedRoute,
+            private router: Router) { }
 
   ngOnInit(): void {
-    //get the id from the url
+    // get id from the url
     this.route.params.subscribe(
-      parms => {
-        this.lineItemId = parms['id'];
-        console.log("LineItemID = " + this.lineItemId);
-      }
-    );
-    //get lineItem by id
+      parms => { this.lineItemId = parms['id']});
+    
+    // get the lineItem 
     this.lineItemSvc.getById(this.lineItemId).subscribe(
       resp => {
         this.lineItem = resp as LineItem;
-        console.log('LineItem', this.lineItem);
+        console.log("LineItem ", this.lineItem);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+
+    // get list of products
+    this.productSvc.getAll().subscribe(
+      resp => {
+        this.products = resp as Product[];
       },
       err => {
         console.log(err);
       }
     );
   }
+
   save() {
     // save the lineItem to the DB
     this.lineItemSvc.update(this.lineItem).subscribe(
       resp => {
         this.lineItem = resp as LineItem;
-        console.log('LineItem updated',this.lineItem);
-        // forward to the line item list component
-        this.router.navigateByUrl("/line-item-list");
+        // forward to the product list component
+        this.router.navigateByUrl("/request-lines/"+this.lineItem.request.id);
       },
       err => {
         console.log(err);
       }
+    )
+  }
 
-    );
+  compProduct(a: Product, b: Product): boolean {
+    return a && b && a.id === b.id;
   }
 
 }

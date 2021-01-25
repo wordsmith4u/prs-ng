@@ -1,25 +1,27 @@
 <app-menu></app-menu>
 <section class="heading">
-    <span class='component-title'>[{{title}}]</span>
-</section>
-<main class="single">
-    <table *ngIf='lineItem' class="table table-sm">
+    <span class='component-title'>[{{title}} {{request.id}}]</span>
+  </section>
+  <main class="single">
+    <table class="table table-sm">
         <tr>
             <td>
-                Product
+                Product:
             </td>
             <td>
-                <input [(ngModel)]="lineItem.product" class="rounded">
+                <select [(ngModel)]="lineItem.product" class="rounded">
+                    <option *ngFor='let product of products' [ngValue]='product'>{{product.name}}</option>
+                </select>
             </td>
-        </tr>
-        <tr>
-            <td>
-                Quantity:
-            </td>
-            <td>
-                <input [(ngModel)]="lineItem.quantity" class="rounded" type="number" min="0">
-            </td>
-        </tr>
+          </tr>
+      <tr>
+        <td>
+            Quantity:
+        </td>
+        <td>
+            <input [(ngModel)]="lineItem.quantity" class="rounded" type="text">
+        </td>
+      </tr>
     </table>
-</main>
-<span><button (click)="save()" class="btn btn-sm btn-primary">{{submitBtnTitle}</button></span>
+  </main>
+  <span><button (click)="save()" class="btn btn-sm btn-primary">{{submitBtnTitle}}</button></span>
