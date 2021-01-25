@@ -14,10 +14,11 @@ import { SystemService } from 'src/app/service/system.service';
 export class RequestApproveComponent implements OnInit {
   requestTitle = "PurchaseRequest Approve/Reject";
   linesTitle = "Lines";
+  approveBtn = "Approve";
+  rejectBtn = "Reject";
   request: Request = null;
   lineItems: LineItem[] = [];
   lineItem: LineItem = new LineItem();
-  isHidden = true;
   requestId = 0;
 
   constructor(private lineItemSvc: LineItemService,
@@ -54,6 +55,7 @@ export class RequestApproveComponent implements OnInit {
     )
   }
 
+  // Approve a request
   approve() {
     this.requestSvc.approve(this.request).subscribe(
       resp => {
@@ -64,6 +66,7 @@ export class RequestApproveComponent implements OnInit {
     )
   }
 
+  // Reject a request
   reject() {
     this.requestSvc.reject(this.request).subscribe(
       resp => {

@@ -9,15 +9,13 @@ import { SystemService } from '../../../service/system.service';
   styleUrls: ['./request-list.component.css']
 })
 export class RequestListComponent implements OnInit {
-  title = "Request List";
+  title = "PurchaseRequest List";
   requests: Request[] = [];
 
   constructor(private requestSvc: RequestService,
               private sysSvc: SystemService) { }
 
   ngOnInit(): void {
-    // if coming from login we should have an authenticated user inside sysSvc
-    console.log("user list - loggedInUser?", this.sysSvc.loggedInUser);
     // populate list of requests
     this.requestSvc.getAll().subscribe(
       resp => {
