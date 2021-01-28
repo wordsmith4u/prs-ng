@@ -22,12 +22,15 @@ export class RequestApproveComponent implements OnInit {
   requestId = 0;
 
   constructor(private lineItemSvc: LineItemService,
-              private requestSvc: RequestService,
-              private sysSvc: SystemService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+    private requestSvc: RequestService,
+    private sysSvc: SystemService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    // Check to see if there is a logged in user
+    this.sysSvc.checkLogin();
+
     // get the id from the url
     this.route.params.subscribe(
       parms => {
@@ -61,7 +64,7 @@ export class RequestApproveComponent implements OnInit {
       resp => {
         this.request = resp as Request;
         // forward to request review
-        this.router.navigateByUrl("/request-review/"+this.sysSvc.loggedInUser.id)
+        this.router.navigateByUrl("/request-review/" + this.sysSvc.loggedInUser.id)
       }
     )
   }
@@ -72,7 +75,7 @@ export class RequestApproveComponent implements OnInit {
       resp => {
         this.request = resp as Request;
         // forward to request review
-        this.router.navigateByUrl("/request-review/"+this.sysSvc.loggedInUser.id)
+        this.router.navigateByUrl("/request-review/" + this.sysSvc.loggedInUser.id)
       }
     )
   }

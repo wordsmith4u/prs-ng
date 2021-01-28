@@ -17,7 +17,7 @@ export class LineItemService {
     return this.http.get(URL+'/') as Observable<LineItem[]>;
   }
 
-  // get lineItem by id
+  // get lineItem by ID
   getById(id) : Observable<LineItem> {
     return this.http.get(URL+'/'+id) as Observable<LineItem>;
   }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Request } from 'src/app/model/request.class';
 import { RequestService } from 'src/app/service/request.service';
@@ -18,9 +19,13 @@ export class RequestEditComponent implements OnInit {
   constructor(private requestSvc: RequestService,
               private sysSvc: SystemService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private loc: Location) { }
 
   ngOnInit(): void {
+    // Check to see if there is a logged in user
+    this.sysSvc.checkLogin();
+        
     // set the request user to the current user
     this.request.user = this.sysSvc.loggedInUser;
 
@@ -51,6 +56,10 @@ export class RequestEditComponent implements OnInit {
         console.log(err);
       }
     )
+  }
+
+  backClicked() {
+    this.loc.back();
   }
 
 }

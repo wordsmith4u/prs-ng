@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/model/user.class';
+import { Location } from '@angular/common';
 import { UserService } from 'src/app/service/user.service';
+import { SystemService } from 'src/app/service/system.service';
 
 @Component({
   selector: 'app-user-create',
@@ -14,9 +16,13 @@ export class UserCreateComponent implements OnInit {
   user: User = new User();
   
   constructor(private userSvc: UserService,
-              private router: Router) { }
+              private sysSvc: SystemService,
+              private router: Router,
+              private loc: Location) { }
 
   ngOnInit(): void {
+    // Check to see if there is a logged in user
+    this.sysSvc.checkLogin();
   }
 
   save() {
@@ -31,6 +37,10 @@ export class UserCreateComponent implements OnInit {
         console.log(err);
       }
     )
+  }
+
+  backClicked() {
+    this.loc.back();
   }
 
 }

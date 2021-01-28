@@ -12,14 +12,19 @@ export class RequestReviewComponent implements OnInit {
   title = "PurchaseRequest Review";
   requests: Request[] = [];
 
+
   constructor(private requestSvc: RequestService,
-              private sysSvc: SystemService) { }
+    private sysSvc: SystemService) { }
 
   ngOnInit(): void {
+    // Check to see if there is a logged in user
+    this.sysSvc.checkLogin();
+
     // populate list of requests in review status
     this.requestSvc.review(this.sysSvc.loggedInUser.id).subscribe(
       resp => {
         this.requests = resp as Request[];
+        console.log("Review Success");
       },
       err => {
         console.log(err);

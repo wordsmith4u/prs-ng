@@ -2,37 +2,31 @@
 <section class="heading">
     <span class="page-title font-weight-bold font-italic">[{{title}}]</span>
     <a routerLink='/vendor-create'>
-        <img width='20' height='20' src='assets/add-icon.png' title='Add New'>
+        <img [hidden]="isNotAdmin" width='20' height='20' src='assets/add-icon.png' title='Add New'>
     </a>
 </section>
 <table class="table table-sm table-striped">
     <thead>
         <tr>
             <th>ID</th>
+            <th>Code</th>
             <th>Name</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Zip</th>
             <th>Phone Number</th>
             <th>Email</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let v of vendors">
-            <td>{{v.id}}</td>
-            <td>{{v.name}}</td>
-            <td>{{v.address}}</td>
-            <td>{{v.city}}</td>
-            <td>{{v.state}}</td>
-            <td>{{v.zip}}</td>
-            <td>{{v.phoneNumber}}</td>
-            <td>{{v.email}}</td>
-            <td><a routerLink='/vendor-detail/{{v.id}}'><img src='assets/details.png' width='20' height='20'
+        <tr *ngFor="let vendor of vendors">
+            <td>{{vendor.id}}</td>
+            <td>{{vendor.code}}</td>
+            <td>{{vendor.name}}</td>
+            <td>{{vendor.phoneNumber}}</td>
+            <td>{{vendor.email}}</td>
+            <td><a routerLink='/vendor-detail/{{vendor.id}}'><img src='assets/details.png' width='20' height='20'
                         title='Vendor Details'> </a> |
 
-                <a routerLink='/vendor-edit/{{v.id}}'><img src='assets/pencil-icon.png' width='20' height='20'
+                <a routerLink='/vendor-edit/{{vendor.id}}'><img src='assets/pencil-icon.png' width='20' height='20'
                         title='Vendor Edit'></a>
             </td>
         </tr>

@@ -10,12 +10,20 @@ import { SystemService } from './../../../service/system.service';
   styleUrls: ['./vendor-list.component.css']
 })
 export class VendorListComponent implements OnInit {
-  title: string = "Vendor-List";
+  title = "Vendor-List";
   vendors: Vendor[] = [];
+  isNotAdmin = false;
 
   constructor(private vendorSvc: VendorService, private sysSvc: SystemService) { }
 
   ngOnInit(): void {
+    this.sysSvc.checkLogin();
+    
+     // Checks to see if the logged in user is an admin
+     if(!(this.sysSvc.loggedInUser.admin)) {
+      this.isNotAdmin = true;
+    }
+    
     // populate list of vendors
     this.vendorSvc.getAll().subscribe(
       resp => {

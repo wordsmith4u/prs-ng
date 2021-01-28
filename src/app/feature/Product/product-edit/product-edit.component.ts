@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/model/product.class';
 import { Vendor } from 'src/app/model/vendor.class';
 import { ProductService } from 'src/app/service/product.service';
 import { VendorService } from 'src/app/service/vendor.service';
+import { SystemService } from 'src/app/service/system.service';
 
 @Component({
   selector: 'app-product-edit',
@@ -19,19 +21,23 @@ export class ProductEditComponent implements OnInit {
   
   constructor(private productSvc: ProductService,
               private vendorSvc: VendorService,
+              private sysSvc: SystemService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private loc: Location) { }
 
   ngOnInit(): void {
+    // Check to see if there is a logged in user
+    this.sysSvc.checkLogin();
+
     // get id from url
     this.route.params.subscribe(
       parms => { this.productId = parms['id']; });
     
-    // get the product id
+    // get the product
     this.productSvc.getById(this.productId).subscribe(
       resp => {
         this.product = resp as Product;
-        console.log("Product", this.product);
       },
       err => {
         console.log(err);
@@ -51,10 +57,9 @@ export class ProductEditComponent implements OnInit {
 
   save() {
     // save the product to the DB
-    this.productSvc.create(this.product).subscribe(
+    this.productSvc.update(this.product).subscribe(
       resp => {
         this.product = resp as Product;
-        console.log("Product created", this.product);
         // forward to the product list component
         this.router.navigateByUrl("/product-list");
       },
@@ -62,6 +67,10 @@ export class ProductEditComponent implements OnInit {
         console.log(err);
       }
     )
+  }
+
+  backClicked() {
+    this.loc.back();
   }
 
   compVendor(a: Vendor, b: Vendor): boolean {
