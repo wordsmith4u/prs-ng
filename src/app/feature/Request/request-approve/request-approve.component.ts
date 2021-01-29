@@ -64,7 +64,7 @@ export class RequestApproveComponent implements OnInit {
       resp => {
         this.request = resp as Request;
         // forward to request review
-        this.router.navigateByUrl("/request-review/" + this.sysSvc.loggedInUser.id)
+        this.router.navigateByUrl("/request-review")
       }
     )
   }
@@ -75,7 +75,7 @@ export class RequestApproveComponent implements OnInit {
       resp => {
         this.request = resp as Request;
         // forward to request review
-        this.router.navigateByUrl("/request-review/" + this.sysSvc.loggedInUser.id)
+        this.router.navigateByUrl("/request-review")
       }
     )
   }
