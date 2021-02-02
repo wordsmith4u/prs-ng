@@ -57,7 +57,8 @@ import { HomeComponent } from './core/home/home.component';
     LineItemEditComponent,
     RequestReviewComponent,
     RequestApproveComponent,
-    HomeComponent
+    HomeComponent,
+
   ],
   imports: [
     BrowserModule,
