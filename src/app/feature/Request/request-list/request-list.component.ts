@@ -16,10 +16,8 @@ export class RequestListComponent implements OnInit {
     private sysSvc: SystemService) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // populate list of requests
     this.requestSvc.getAll().subscribe(
       resp => {
         this.requests = resp as Request[];
@@ -29,7 +27,7 @@ export class RequestListComponent implements OnInit {
             if (this.requests[i].user.id != this.sysSvc.loggedInUser.id) {
               this.requests.splice(i, 1);
               console.log("This requests");
-              
+
             }
           }
         }

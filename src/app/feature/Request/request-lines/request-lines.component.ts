@@ -28,21 +28,17 @@ export class RequestLinesComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // get the id from the url
     this.route.params.subscribe(
       parms => {
         this.requestId = parms['id'];
       });
 
-    // get the request by the request id
     this.requestSvc.getById(this.requestId).subscribe(
       resp => {
         this.request = resp as Request;
 
-        // Disable Submit for Review Button if in Review Status
         if (this.request.status === "Review") {
           this.isDisabled = true;
         } else {
@@ -54,11 +50,9 @@ export class RequestLinesComponent implements OnInit {
       }
     )
 
-    // get the line items by request id
     this.lineItemSvc.getLineItemsByRequestId(this.requestId).subscribe(
       resp => {
         this.lineItems = resp as LineItem[];
-        // Set true if no lineItems
         if (this.lineItems.length === 0) {
           this.isHidden = true;
         }
@@ -70,13 +64,10 @@ export class RequestLinesComponent implements OnInit {
 
   }
 
-  // Delete a lineitem from the request
   delete(lineItemId: number) {
-    // delete the product from the DB
     this.lineItemSvc.delete(lineItemId).subscribe(
       resp => {
         this.lineItem = resp as LineItem;
-        // reload current page
         this.ngOnInit();
       },
       err => {
@@ -85,12 +76,10 @@ export class RequestLinesComponent implements OnInit {
     );
   }
 
-  // Submit a request for review
   submit() {
     this.requestSvc.submit(this.request).subscribe(
       resp => {
         this.request = resp as Request;
-        // forward to the request list component
         this.router.navigateByUrl("/request-list");
       },
       err => {

@@ -15,12 +15,9 @@ export class MenuComponent implements OnInit {
   constructor(private sysSvc: SystemService) { }
   
   ngOnInit(): void {
-    // Set user to currently logged in user
     this.user = this.sysSvc.loggedInUser;
 
     }
-
-  // Array of Menu Options
   menuItems : MenuItem[] = [
     new MenuItem("User", "/user-list", "User List"),
     new MenuItem("Vendor", "/vendor-list", "Vendor List"),

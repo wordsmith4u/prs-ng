@@ -19,12 +19,10 @@ export class VendorListComponent implements OnInit {
   ngOnInit(): void {
     this.sysSvc.checkLogin();
     
-     // Checks to see if the logged in user is an admin
      if(!(this.sysSvc.loggedInUser.admin)) {
       this.isNotAdmin = true;
     }
     
-    // populate list of vendors
     this.vendorSvc.getAll().subscribe(
       resp => {
         this.vendors = resp as Vendor[];

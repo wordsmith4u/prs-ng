@@ -17,15 +17,12 @@ export class ProductListComponent implements OnInit {
               private sysSvc : SystemService) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // Checks to see if the logged in user is an admin
     if(!(this.sysSvc.loggedInUser.admin)) {
       this.isNotAdmin = true;
     }
 
-    // populate list of products
     this.productSvc.getAll().subscribe(
       resp => {
         this.products = resp as Product[];

@@ -27,14 +27,11 @@ export class ProductEditComponent implements OnInit {
               private loc: Location) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // get id from url
     this.route.params.subscribe(
       parms => { this.productId = parms['id']; });
     
-    // get the product
     this.productSvc.getById(this.productId).subscribe(
       resp => {
         this.product = resp as Product;
@@ -44,7 +41,6 @@ export class ProductEditComponent implements OnInit {
       }
     );
     
-    // get list of vendors
     this.vendorSvc.getAll().subscribe(
       resp => {
         this.vendors = resp as Vendor[];
@@ -56,11 +52,9 @@ export class ProductEditComponent implements OnInit {
   }
 
   save() {
-    // save the product to the DB
     this.productSvc.update(this.product).subscribe(
       resp => {
         this.product = resp as Product;
-        // forward to the product list component
         this.router.navigateByUrl("/product-list");
       },
       err => {

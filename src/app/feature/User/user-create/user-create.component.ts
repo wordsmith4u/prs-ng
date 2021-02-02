@@ -21,16 +21,13 @@ export class UserCreateComponent implements OnInit {
               private loc: Location) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
   }
 
   save() {
-    // save the user to the DB
     this.userSvc.create(this.user).subscribe(
       resp => {
         this.user = resp as User;
-        // forward the user to the list component
         this.router.navigateByUrl("/user-list");
       },
       err => {

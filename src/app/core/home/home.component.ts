@@ -18,10 +18,8 @@ export class HomeComponent implements OnInit {
               private sysSvc: SystemService ) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // get user by user id
     this.userSvc.getById(this.sysSvc.loggedInUser.id).subscribe(
       resp => {
         this.user = resp as User;

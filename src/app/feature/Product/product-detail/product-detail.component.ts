@@ -20,15 +20,13 @@ export class ProductDetailComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // get the id from the url
     this.route.params.subscribe(
       parms => {
         this.productId = parms['id'];
       });
-    // get product by id
+
     this.productSvc.getById(this.productId).subscribe(
       resp => {
         this.product = resp as Product;
@@ -40,11 +38,9 @@ export class ProductDetailComponent implements OnInit {
   }
 
   delete() {
-    // delete the product from the DB
     this.productSvc.delete(this.product.id).subscribe(
       resp => {
         this.product = resp as Product;
-        // forward to the product list component
         this.router.navigateByUrl("/product-list");
       },
       err => {

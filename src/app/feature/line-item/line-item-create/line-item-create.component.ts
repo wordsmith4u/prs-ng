@@ -29,16 +29,13 @@ export class LineItemCreateComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // get the id from the url
     this.route.params.subscribe(
       parms => {
         this.requestId = parms['id'];
       });
 
-    // get the request by the request id
     this.requestSvc.getById(this.requestId).subscribe(
       resp => {
         this.request = resp as Request;
@@ -48,7 +45,6 @@ export class LineItemCreateComponent implements OnInit {
       }
     )
 
-    // get list of products due to FK constraint
     this.productSvc.getAll().subscribe(
       resp => {
         this.products = resp as Product[];
@@ -60,14 +56,11 @@ export class LineItemCreateComponent implements OnInit {
   }
 
   save() {
-    // set the line item request to the current request
     this.lineItem.request = this.request;
     
-    // save the line item to the DB
     this.lineItemSvc.create(this.lineItem).subscribe(
       resp => {
         this.lineItem = resp as LineItem;
-        // forward to the request lines component
         this.router.navigateByUrl("/request-lines/"+this.requestId)
       },
       err => {

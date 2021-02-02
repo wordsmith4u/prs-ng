@@ -23,15 +23,13 @@ export class VendorEditComponent implements OnInit {
     private loc: Location) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // get the id from the url
     this.route.params.subscribe(
       parms => {
         this.vendorId = parms['id'];
       });
-    // get vendor by id
+ 
     this.vendorSvc.getById(this.vendorId).subscribe(
       resp => {
         this.vendor = resp as Vendor;
@@ -43,11 +41,9 @@ export class VendorEditComponent implements OnInit {
   }
 
   save() {
-    // save the vendor to the DB
     this.vendorSvc.update(this.vendor).subscribe(
       resp => {
         this.vendor = resp as Vendor;
-        // forward to the vendor list component
         this.router.navigateByUrl("/vendor-list");
       },
       err => {

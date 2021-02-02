@@ -25,14 +25,11 @@ export class LineItemEditComponent implements OnInit {
             private router: Router) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // get id from the url
     this.route.params.subscribe(
       parms => { this.lineItemId = parms['id']});
     
-    // get the lineItem 
     this.lineItemSvc.getById(this.lineItemId).subscribe(
       resp => {
         this.lineItem = resp as LineItem;
@@ -43,7 +40,6 @@ export class LineItemEditComponent implements OnInit {
       }
     );
 
-    // get list of products
     this.productSvc.getAll().subscribe(
       resp => {
         this.products = resp as Product[];
@@ -55,11 +51,9 @@ export class LineItemEditComponent implements OnInit {
   }
 
   save() {
-    // save the lineItem to the DB
     this.lineItemSvc.update(this.lineItem).subscribe(
       resp => {
         this.lineItem = resp as LineItem;
-        // forward to the product list component
         this.router.navigateByUrl("/request-lines/"+this.lineItem.request.id);
       },
       err => {

@@ -20,15 +20,13 @@ export class RequestDetailComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {  
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // get the id from the url
     this.route.params.subscribe(
       parms => {
         this.requestId = parms['id'];
       });
-    // get request by id
+ 
     this.requestSvc.getById(this.requestId).subscribe(
       resp => {
         this.request = resp as Request;
@@ -40,11 +38,9 @@ export class RequestDetailComponent implements OnInit {
   }
 
   delete() {
-    // delete the request from the DB
     this.requestSvc.delete(this.request.id).subscribe(
       resp => {
         this.request = resp as Request;
-        // forward to the request list component
         this.router.navigateByUrl("/request-list");
       },
       err => {

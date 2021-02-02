@@ -20,15 +20,13 @@ export class UserDetailComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // get the id from the url
     this.route.params.subscribe(
       parms => {
         this.userId = parms['id'];
       });
-    // get user by user id
+
     this.userSvc.getById(this.userId).subscribe(
       resp => {
         this.user = resp as User;
@@ -40,11 +38,9 @@ export class UserDetailComponent implements OnInit {
   }
 
   delete() {
-    // delete the user from the DB
     this.userSvc.delete(this.user.id).subscribe(
       resp => {
         this.user = resp as User;
-        // forward to the user list component
         this.router.navigateByUrl("/user-list");
       },
       err => {

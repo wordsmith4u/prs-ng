@@ -17,10 +17,8 @@ export class RequestReviewComponent implements OnInit {
     private sysSvc: SystemService) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
 
-    // populate list of requests in review status
     this.requestSvc.review(this.sysSvc.loggedInUser.id).subscribe(
       resp => {
         this.requests = resp as Request[];

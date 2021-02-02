@@ -21,7 +21,6 @@ export class ProductCreateComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    // get list of vendors due to FK constraint
     this.vendorSvc.getAll().subscribe(
       resp => {
         this.vendors = resp as Vendor[];
@@ -33,12 +32,10 @@ export class ProductCreateComponent implements OnInit {
   }
 
   save() {
-    // save the product to the DB
     this.productSvc.create(this.product).subscribe(
       resp => {
         this.product = resp as Product;
         console.log("Product created", this.product);
-        // forward to the product list component
         this.router.navigateByUrl("/product-list");
       },
       err => {

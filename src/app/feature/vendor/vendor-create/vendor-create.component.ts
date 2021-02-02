@@ -21,16 +21,13 @@ export class VendorCreateComponent implements OnInit {
               private loc: Location) { }
 
   ngOnInit(): void {
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
   }
 
   save() {
-    // save the vendor to the DB
     this.vendorSvc.create(this.vendor).subscribe(
       resp => {
         this.vendor = resp as Vendor;
-        // forward the vendor to the list component
         this.router.navigateByUrl("/vendor-list");
       },
       err => {

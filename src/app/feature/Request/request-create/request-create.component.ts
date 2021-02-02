@@ -21,20 +21,16 @@ export class RequestCreateComponent implements OnInit {
               private loc: Location) { }
 
   ngOnInit(): void { 
-    // Check to see if there is a logged in user
     this.sysSvc.checkLogin();
   }
 
   save() {
-    // Set the request user to the current user
     this.request.user = this.sysSvc.loggedInUser;
     
-    // save the request to the DB
     this.requestSvc.create(this.request).subscribe(
       resp => {
         this.request = resp as Request;
         console.log("Request created", this.request);
-        // forward to the request list component
         this.router.navigateByUrl("/request-list");
       },
       err => {
