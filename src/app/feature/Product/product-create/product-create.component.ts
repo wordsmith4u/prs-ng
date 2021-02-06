@@ -4,6 +4,7 @@ import { Product } from 'src/app/model/product.class';
 import { Vendor } from 'src/app/model/vendor.class';
 import { ProductService } from 'src/app/service/product.service';
 import { VendorService } from 'src/app/service/vendor.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-create',
@@ -18,6 +19,7 @@ export class ProductCreateComponent implements OnInit {
 
   constructor(private productSvc: ProductService,
               private vendorSvc: VendorService,
+              private loc: Location,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -41,7 +43,11 @@ export class ProductCreateComponent implements OnInit {
       err => {
         console.log(err);
       }
-    );
+      );
+    }
+  
+    backClicked() {
+      this.loc.back();
+    }
+  
   }
-
-}

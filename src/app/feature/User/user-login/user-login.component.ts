@@ -13,6 +13,7 @@ export class UserLoginComponent implements OnInit {
   title: string = 'Login';
   message: string = "";
   user: User = new User();
+  fieldTextType: boolean;
 
   constructor(private userSvc: UserService,
               private sysSvc: SystemService,
@@ -38,6 +39,9 @@ export class UserLoginComponent implements OnInit {
         this.message = "Error during login";
       }
     );
+  }
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 
 }

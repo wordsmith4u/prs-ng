@@ -29,6 +29,7 @@ import { LineItemEditComponent } from './feature/line-item/line-item-edit/line-i
 import { RequestReviewComponent } from './feature/request/request-review/request-review.component';
 import { RequestApproveComponent } from './feature/request/request-approve/request-approve.component';
 import { HomeComponent } from './core/home/home.component';
+import { SortPipe } from './pipe/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { HomeComponent } from './core/home/home.component';
     RequestReviewComponent,
     RequestApproveComponent,
     HomeComponent,
+    SortPipe
 
   ],
   imports: [
