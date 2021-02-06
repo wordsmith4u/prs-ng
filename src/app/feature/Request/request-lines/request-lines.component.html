@@ -20,7 +20,7 @@
 </table>
 
 <section *ngIf='request' class="heading">
-    <span class="page-title font-weight-bold font-italic">[{{linesTitle}}]</span>
+    <span class="page-title font-weight-bold font-italic">{{linesTitle}}</span>
     <a routerLink='/line-item-create/{{request.id}}'[hidden]="isDisabled">
         <img width='20' height='20' src='assets/add-icon.png' title='Add New'>
     </a>

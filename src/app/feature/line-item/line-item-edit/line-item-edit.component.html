@@ -1,6 +1,6 @@
 <app-menu></app-menu>
 <section class="heading">
-    <span class='component-title'>[{{title}}]</span>
+    <span class='component-title'>{{title}}</span>
     <span *ngIf="lineItem">&nbsp;<a routerLink="/request-lines/{{lineItem.request.id}}">Return to List</a></span>
   </section>
   <main class="single">
